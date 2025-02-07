@@ -693,8 +693,9 @@ To analyze the malleability guarantees of a script we define three additional ty
 = Satisfaction
 
 == Satisfaction
-
-The set of data and script elements required to meet the spending conditions of a Bitcoin script, structured in a way that is compatible with Miniscript's analysis and guarantees, for example , signatures and preimages.
+#align(horizon)[
+    The Miniscript-compliant data (e.g., signatures, preimages) required to authorize a Bitcoin script's execution by meeting its spending conditions.
+]
 
 
 == Satisfaction
