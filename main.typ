@@ -694,7 +694,12 @@ Examples for multisig semantics. See more at #link("https://github.com/bitcoin/b
     - #link("https://github.com/wizardsardine/liana")[Liana];
 
 - Go:
-    - #link("https://bitbox.swiss/blog/understanding-bitcoin-miniscript-part-3")[Tutorial: Understanding Bitcoin Miniscript - Part III]
+    - #link("https://bitbox.swiss/blog/understanding-bitcoin-miniscript-part-3")[Tutorial: Understanding Bitcoin Miniscript - Part III];
+
+- Python:
+    - #link("https://github.com/diybitcoinhardware/embit/blob/master/src/embit/descriptor/miniscript.py")[Embit's miniscript.py]
+    - #link("https://github.com/odudex/krux/tree/p2wsh_miniscript")[Krux (branch p2wsh_miniscript)];
+    - #link("https://github.com/odudex/krux/tree/tr_miniscript")[Krux (branch tr_miniscript)];
 
 = Bibliography
 
