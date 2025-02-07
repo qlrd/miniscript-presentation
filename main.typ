@@ -675,20 +675,24 @@ Multisig semantics.
 
 == Type system (malleability)
 
-Ability for a third party to modify an existing satisfaction into another valid satisfaction.
-
-
-== Type system (malleability)
-
-*Third party*: someone who does not hold a participating private key
+#align(horizon)[
+    Ability for a third party to modify an existing satisfaction into another valid satisfaction.
+]
 
 == Type system (malleability)
 
-To analyze the malleability guarantees of a script we define three additional type properties:
+#align(horizon)[
+    *Third party*: someone who does not hold a participating private key
+]
 
-- `s`: signed;
-- `f`: forced;
-- `e`: expressive.
+== Type system (malleability)
+#align(horizon)[
+    To analyze the malleability guarantees of a script we define three additional type properties:
+
+    - `s`: signed;
+    - `f`: forced;
+    - `e`: expressive.
+]
 
 = Satisfaction
 
