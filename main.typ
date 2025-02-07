@@ -25,7 +25,7 @@
 
 #align(horizon + center)[
     #definition(title: "")[
-        (...) an unusual stack-based language with many edge case designed for implementing spending conditions consisting of various combinations of signatures, hash locks, and time locks." @bip379
+        (...) an unusual stack-based language with many edge cases designed for implementing spending conditions consisting of various combinations of signatures, hash locks, and time locks." @bip379
     ]
 ]
 
@@ -86,9 +86,9 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 @bip379 states that, given a combination of spending conditions, it is still highly nontrivial to:
 
-- finding the most economical script to implement it.
+- find the most economical script to implement it;
 
-- implements a composition of their spending conditions
+- implement a composition of their spending conditions;
 
 - find out what spending conditions it permits.
 
@@ -98,7 +98,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 =
 
-*Miniscript* functions as a representation for *scripts* that makes this sort of operations possible. It has a structure that allows composition.
+*Miniscript* has a structure that allows composition: a representation for *scripts* that makes these type of operations possible.
 
 == Miniscript @sipa_miniscript
 
@@ -118,7 +118,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 == Miniscript @sipa_miniscript
 
 #align(horizon)[
-    Policy for a `One of two keys (equally likely)`
+    Miniscript for `One of two keys (equally likely)`
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -139,7 +139,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 == Miniscript @sipa_miniscript
 
 #align(horizon)[
-    Policy for a `One of two keys (one likely, one unlikely)`
+    Miniscript for `One of two keys (one likely, one unlikely)`
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -160,7 +160,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 == Miniscript @sipa_miniscript
 
 #align(horizon)[
-    Policy for a `3-of-3 that turns into a 2-of-3 after 90 days`
+    Miniscript for `3-of-3 that turns into a 2-of-3 after 90 days`
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -185,7 +185,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 == Miniscript @sipa_miniscript
 
 #align(horizon)[
-    Policy for `Lightning: BOLT #3 to_local`.
+    Miniscript for `Lightning: BOLT #3 to_local`.
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -238,25 +238,73 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 == Specification
 #align(horizon)[
-    #table(
-        columns: (auto),
-        inset: 10pt,
-        align: horizon,
-        table.header(
-            [*Liana's simple inheritance wallet* @jean_gist_liana_wsh]
-        ),
-        [
-            `wsh(` \
-            `  or_d(` \
-            `    pk([07fd816d/48'/1'/0'/2']tpub...wd5/<0;1>/*),` \
-            `    and_v(` \
-            `      v:pkh([da855a1f/48'/1'/0'/2']tpub...Hg5/<0;1>/*),` \
-            `      older(36)` \
-            `    )` \
-            `  )` \
-            `)#lz4jfr7g`
-        ]
-    )
+    Liana's simple inheritance wallet @jean_gist_liana_wsh.
+    
+    `wsh(` \
+    `  or_d(` \
+    `    pk([07fd816d/48'/1'/0'/2']tpub...wd5/<0;1>/*),` \
+    `    and_v(` \
+    `      v:pkh([da855a1f/48'/1'/0'/2']tpub...Hg5/<0;1>/*),` \
+    `      older(36)` \
+    `    )` \
+    `  )` \
+    `)#lz4jfr7g`
+    
+]
+
+== Specification
+#align(horizon)[
+    Liana's simple inheritance wallet @jean_gist_liana_tr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
+       
+    `tr(` \
+    `  [07fd816d/48'/1'/0'/2']tpub...mwd5/<0;1>/*,` \
+    `  and_v(` \
+    `    v:pk([da855a1f/48'/1'/0'/2']tpub...Hg5/<0;1>/*),` \
+    `    older(36)` \
+    `  )` \
+    `)#506utvsp`
+]
+
+== Specification
+#align(horizon)[
+    Liana's decaying multisig wallet @jean_gist_liana_mwsh.
+    
+    `wsh(` \
+    `  or_d(` \
+    `    multi(2,` \
+    `      [07fd816d/48'/1'/0'/2']tpub...wd5/<0;1>/*,` \
+    `      [da855a1f/48'/1'/0'/2']tpub...Hg5/<0;1>/*` \
+    `    ),` \
+    `    and_v(` \
+    `      v:thresh(2,` \
+    `        pkh([07fd816d/48'/1'/0'/2']tpub...mwd5/<2;3>/*),` \
+    `        a:pkh([da855a1f/48'/1'/0'/2']tpub...Hg5/<2;3>/*),` \
+    `        a:pkh([cdef7cd9/48'/1'/0'/2']tpub...Ak2/<0;1>/*)` \
+    `      ),` \
+    `      older(36)` \
+    `    )` \
+    `  )`
+    `)#wa74c6se`
+]
+
+== Specification
+#align(horizon)[
+    Liana's expanding multisig TR @jean_gist_liana_mtr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
+
+    `tr(tpub...pMN/<0;1>/*, {` \
+    `  and_v(` \
+    `    v:multi_a(2,` \
+    `      [07fd816d/48'/1'/0'/2']tpub...mwd5/<2;3>/*,` \
+    `      [da855a1f/48'/1'/0'/2']tpub...DHg5/<2;3>/*,` \
+    `      [cdef7cd9/48'/1'/0'/2']tpub...SAk2/<0;1>/*` \
+    `    ),` \
+    `    older(36)` \
+    `  ),` \
+    `  multi_a(2,` \
+    `    [07fd816d/48'/1'/0'/2']tpub...mwd5/<0;1>/*,` \
+    `    [da855a1f/48'/1'/0'/2']tpub...DHg5/<0;1>/*` \
+    `  )` \
+    `})#tvh3u2lu`
 ]
 
 == Specification
@@ -289,7 +337,7 @@ Normal fragments
 == Translation 
 Wrappers: fragments that do not change the semantics of their subexpressions, separated by a colon and each one is applied to the next fragment
 
-#align(horizon)[
+#align(horizon + center)[
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -300,6 +348,21 @@ Wrappers: fragments that do not change the semantics of their subexpressions, se
         `x:fragment(arg)`, `x -> fragment`,
         `xy:fragment(arg)`, `x -> y -> fragment`,
         `xyz:fragment(arg)`, `x -> y -> z -> fragment`
+    )
+]
+== Translation 
+
+Simple validation semantics
+#align(horizon + center)[
+    #table(
+        columns: (auto, auto),
+        inset: 10pt,
+        align: horizon,
+        table.header(
+            [*Miniscript*], [*Script*]
+        ),
+        `0`, `0`,
+        `1`, `1`,
     )
 ]
 
@@ -317,7 +380,21 @@ Check key semantics
         `0`, `0`,
         `1`, `1`,
         `pk_k(key)`, `<key>`,
-        `pk_h(key)`, `DUP HASH160 \<HASH160(key)\> EQUALVERIFY`,
+        `pk_h(key)`, `DUP HASH160 <HASH160(key)> EQUALVERIFY`,
+    )
+]
+
+== Translation 
+
+Wrapped check key semantics
+#align(horizon + center)[
+    #table(
+        columns: (auto, auto),
+        inset: 10pt,
+        align: horizon,
+        table.header(
+            [*Miniscript*], [*Script*]
+        ),
         `pk(key) = c:pk_k(key)`, `<key> CHECKSIG`,
         `pkh(key) = c:pk_h(key)`, `DUP HASH160 <HASH160(key)> EQUALVERIFY CHECKSIG`,
     )
@@ -360,7 +437,7 @@ Hash semantics
 == Translation 
 
 Boolean semantics 
-#align(horizon + center)[
+#align(horizon)[
     #table(
         columns: (auto, auto),
         inset: 10pt,
@@ -382,7 +459,7 @@ Boolean semantics
 == Translation 
 
 Multisig semantics
-#align(horizon + center)[
+#align(horizon)[
     #table(
         columns: (auto, auto, auto),
         inset: 7pt,
@@ -432,9 +509,9 @@ Wrappers semantics
 #align(horizon)[
     @bip379 defined a correctness type system for Miniscript to model properties and its requirements:
 
-    - Correctness
-    - Timelock type mixing
-    - malleability
+    - Correctness;
+    - timelock mixing;
+    - malleability.
 ]
 
 == Type system (correctness)
@@ -570,13 +647,14 @@ Multisig semantics.
 
 == Type system (timelock mixing)
 
-Four timelock types:
+#align(horizon)[
+    Four timelock types:
 
-- absolute time based;
-- absolute height based;
-- relative time based;
-- relative height based;
-
+    - absolute time based;
+    - absolute height based;
+    - relative time based;
+    - relative height based;
+]
 
 
 == Type system (timelock mixing)
@@ -585,17 +663,14 @@ Four timelock types:
 ]
 
 == Type system (timelock mixing)
-#align(horizon + center)[
-    `and` combinator & `thresh` combinators where `k >= 2`, it is illegal:
-
-    #h(3cm)
+#align(horizon)[
+    It is illegal height based *and* time based timelocks to appear together in:
     
-    height based *and* time based timelocks to appear togheter
-]
+    - `and` fragment combinations; and
+    - `thresh` frament combinations where `k >= 2`,
 
-== Type system (timelock mixing)
-#align(horizon + center)[
-    for all other combinators, it is legal to mix timelock types.
+    For all other combinators, it is legal to mix timelock types.
+    
 ]
 
 == Type system (malleability)
@@ -700,6 +775,9 @@ Examples for multisig semantics. See more at #link("https://github.com/bitcoin/b
     - #link("https://github.com/diybitcoinhardware/embit/blob/master/src/embit/descriptor/miniscript.py")[Embit's miniscript.py]
     - #link("https://github.com/odudex/krux/tree/p2wsh_miniscript")[Krux (branch p2wsh_miniscript)];
     - #link("https://github.com/odudex/krux/tree/tr_miniscript")[Krux (branch tr_miniscript)];
+
+= Thanks!
+
 
 = Bibliography
 
