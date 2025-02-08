@@ -2,7 +2,7 @@
 
 #show: slides.with(
   title: "Miniscript",
-  subtitle: "An introduction to BIP 379",
+  subtitle: "An introduction to BIP 379\nhttps://github.com/qlrd/miniscript-presentation",
   date: none,
   authors: ("qlrd", ),
   layout: "medium",
@@ -25,7 +25,7 @@
 
 #align(horizon + center)[
     #definition(title: "")[
-        (...) an unusual stack-based language with many edge cases designed for implementing spending conditions consisting of various combinations of signatures, hash locks, and time locks." @bip379
+        (...) an unusual stack-based language with many edge cases designed for implementing spending conditions consisting of various combinations of signatures, hash locks, and time locks. @bip379
     ]
 ]
 
@@ -65,7 +65,7 @@ Freezing funds until a time in the future from @wiki_script
 
 == Bitcoin script
 
-Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 2-of-3 multisig. After 30 days 1-of-3 plus a lawyers's singlesig. After 90 days the lawyer's singlesig.
+Timelock variable multisignature from  @mastering_bitcoin: 2-of-3 multisig; after 30 days 1-of-3 with a lawyers's signature; after 90 days the lawyer's signature.
 
 #align(horizon + center)[
     #table(
@@ -80,11 +80,11 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 ]
 
 
-= The issue
+= The issue @bip379
 
 = 
 
-@bip379 states that, given a combination of spending conditions, it is still highly nontrivial to:
+Given a combination of spending conditions, it is challenging to:
 
 - find the most economical script to implement it;
 
@@ -254,7 +254,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 == Specification
 #align(horizon)[
-    Liana's simple inheritance wallet @jean_gist_liana_tr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
+    Liana's simple inheritance wallet TR @jean_gist_liana_tr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
        
     `tr(` \
     `  [07fd816d/48'/1'/0'/2']tpub...mwd5/<0;1>/*,` \
@@ -267,7 +267,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 == Specification
 #align(horizon)[
-    Liana's decaying multisig wallet @jean_gist_liana_mwsh.
+    Liana's variable multisig @jean_gist_liana_mwsh.
     
     `wsh(` \
     `  or_d(` \
@@ -289,7 +289,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 
 == Specification
 #align(horizon)[
-    Liana's expanding multisig TR @jean_gist_liana_mtr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
+    Liana's variable multisig TR @jean_gist_liana_mtr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
 
     `tr(tpub...pMN/<0;1>/*, {` \
     `  and_v(` \
@@ -317,7 +317,7 @@ Timelock variable multisignature from  @mastering_bitcoin: Mohammed/Saeed/Zaira 
 == Translation 
 #align(horizon + center)[
     #definition(title: "")[
-        *Miniscript* consists of a set of *script* fragments which are designed to be safely and correctly composable (...) targeted by spending policy compilers)
+        *Miniscript* consists of a set of *script* fragments which are designed to be safely and correctly composable (...) targeted by spending policy compilers
     ]
 ]
 
@@ -377,8 +377,6 @@ Check key semantics
         table.header(
             [*Miniscript*], [*Script*]
         ),
-        `0`, `0`,
-        `1`, `1`,
         `pk_k(key)`, `<key>`,
         `pk_h(key)`, `DUP HASH160 <HASH160(key)> EQUALVERIFY`,
     )
@@ -440,7 +438,7 @@ Boolean semantics
 #align(horizon)[
     #table(
         columns: (auto, auto),
-        inset: 10pt,
+        inset: 8pt,
         align: horizon,
         table.header(
             [*Miniscript*], [*Script*]
@@ -478,7 +476,7 @@ Multisig semantics
 Wrappers semantics
 #table(
     columns: (auto, auto),
-    inset: 10pt,
+    inset: 4pt,
     align: horizon,
     table.header(
         [*Miniscript*], [*Script*]
@@ -507,7 +505,7 @@ Wrappers semantics
 == Type system
 
 #align(horizon)[
-    @bip379 defined a correctness type system for Miniscript to model properties and its requirements:
+    BIP379 define a correctness type system for Miniscript to model properties and its requirements:
 
     - Correctness;
     - timelock mixing;
@@ -538,7 +536,7 @@ Wrappers semantics
 #show link: underline
 
 Keys semantics.
-#align(horizon)[
+#align(horizon + center)[
     #table(
         columns: (auto, auto, auto, auto),
         inset: 10pt,
@@ -556,7 +554,7 @@ Keys semantics.
 #show link: underline
 
 Time semantics.
-#align(horizon)[
+#align(horizon + center)[
     #table(
         columns: (auto, auto, auto, auto),
         inset: 10pt,
@@ -573,7 +571,7 @@ Time semantics.
 #show link: underline
 
 Hash semantics.
-#align(horizon)[
+#align(horizon + center)[
     #table(
         columns: (auto, auto, auto, auto),
         inset: 10pt,
@@ -650,10 +648,8 @@ Multisig semantics.
 #align(horizon)[
     Four timelock types:
 
-    - absolute time based;
-    - absolute height based;
-    - relative time based;
-    - relative height based;
+    - absolute or relative time-based;
+    - absolute or relative height-based;
 ]
 
 
@@ -664,7 +660,7 @@ Multisig semantics.
 
 == Type system (timelock mixing)
 #align(horizon)[
-    It is illegal height based *and* time based timelocks to appear together in:
+    It is not valid to mix height-based *and* time-based timelocks in:
     
     - `and` fragment combinations; and
     - `thresh` frament combinations where `k >= 2`,
@@ -697,7 +693,7 @@ Multisig semantics.
 = Satisfaction
 
 == Satisfaction
-#align(horizon)[
+#align(horizon + center)[
     The Miniscript-compliant data (e.g., signatures, preimages) required to authorize a Bitcoin script's execution by meeting its spending conditions.
 ]
 
@@ -707,7 +703,7 @@ Multisig semantics.
 
 Examples for key semantics. See more at #link("https://github.com/bitcoin/bips/blob/master/bip-0379.md#satisfaction")[BIP 379's satisfaction section]
 
-#align(horizon)[
+#align(horizon + center)[
     #table(
         columns: (auto, auto, auto),
         inset: 10pt,
