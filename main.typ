@@ -254,7 +254,7 @@ Given a combination of spending conditions, it is challenging to:
 
 == Specification
 #align(horizon)[
-    Liana's simple inheritance wallet TR @jean_gist_liana_tr. First key expression is a `NUMS` ("nothing-up-my-sleeves") point @jaonoctus_nums.
+    Liana's simple inheritance wallet TR @jean_gist_liana_tr.
        
     `tr(` \
     `  [07fd816d/48'/1'/0'/2']tpub...mwd5/<0;1>/*,` \
